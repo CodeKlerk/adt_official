@@ -6,6 +6,7 @@
 import { Routes, RouterModule } from '@angular/router';
 import { MainLayoutComponent } from "./shared/layout/app-layouts/main-layout.component";
 import { AuthLayoutComponent } from "./shared/layout/app-layouts/auth-layout.component";
+import { FaqComponent } from "./faq/faq.component";
 
 export const routes: Routes = [
   {
@@ -20,8 +21,9 @@ export const routes: Routes = [
       { path: 'inventory', loadChildren: 'app/inventory/inventory.module#InventoryModule', data: { pageTitle: 'Inventory' } },
       { path: 'profile', loadChildren: 'app/profile/profile.module#ProfileModule', data: { pageTitle: 'Profile' } },
       { path: 'settings', loadChildren: 'app/settings/settings.module#SettingsModule', data: { pageTitle: 'Settings' } },
-      { path: 'orders', loadChildren: 'app/orders/orders.module#OrdersModule', data: { pageTitle: 'Orders' } }
-     ]
+      { path: 'orders', loadChildren: 'app/orders/orders.module#OrdersModule', data: { pageTitle: 'Orders' } },
+      { path: 'faq', component: FaqComponent, data: { pageTitle: 'Frequently Asked Questions' } }
+    ]
   },
 
   { path: 'auth', component: AuthLayoutComponent, loadChildren: 'app/+auth/auth.module#AuthModule' },
