@@ -23,7 +23,6 @@ export class SharedComponent implements OnInit, DoCheck, OnChanges {
     // Determine the controls to be displayed.
     form: string;
     patientForm: FormGroup;
-    today = new Date();
 
     // Define properties first.
     @Input() patient = new Patient;
@@ -93,6 +92,8 @@ export class SharedComponent implements OnInit, DoCheck, OnChanges {
         this.patientRegimen = this._patientService.getRegimen();
         this.patientWhostage = this._patientService.getWho_stage();
         this.patientProphylaxis = this._patientService.getProphylaxis();
+        // Form Builder Logic
+        const form = this.patientForm;
         this.patientForm = this.fb.group({
             id: ['', Validators.required],
             ccc_number: ['', Validators.required],
@@ -110,16 +111,14 @@ export class SharedComponent implements OnInit, DoCheck, OnChanges {
             physical_address: ['', Validators.required],
             gender: ['', Validators.required],
             is_pregnant: ['', Validators.required],
-            is_tb: ['', Validators.required],
-            is_tb_tested: ['', Validators.required],
-            tb_start: [''],
-            tb_end: [''],
-            is_sms: ['', Validators.required],
+            is_tb: [''],
+            is_tb_tested: [''],
+            is_sms: ['0', Validators.required],
             is_smoke: ['', Validators.required],
             is_alcohol: ['', Validators.required],
             current_status: ['', Validators.required],
-            enrollment_date: [this.nextAppointment(), Validators.required],
-            regimen_start_date: [this.nextAppointment(), Validators.required],
+            enrollment_date: [this.today(), Validators.required],
+            regimen_start_date: [this.today(), Validators.required],
             regimen_id: ['', Validators.required],
             service_id: ['', Validators.required],
             facility_id: ['', Validators.required],
@@ -151,12 +150,40 @@ export class SharedComponent implements OnInit, DoCheck, OnChanges {
             is_drugs: '',
             is_allergies: ''
         });
+        this.patientForm.get('patient_status').valueChanges.subscribe(
+            value => {
+                if (value == 'concordant') {
+                    form.patchValue({
+                        disclosure: '1'
+                    });
+                }
+                else {
+                    form.patchValue({
+                        disclosure: '0'
+                    });
+                }
+            }
+        );
+
+        this.patientForm.get('start_tb_phase').valueChanges.subscribe(
+            value => {
+                this.tbEndCalculator(value);
+            }
+        );
+
+        this.patientForm.get('isoniazid_start').valueChanges.subscribe(
+            value => {
+                this.patientForm.patchValue({
+                    isoniazid_end: this.dateCalc(value, 168)
+                })
+            }
+        )
     }
 
-     nextAppointment(): string {
-    let date = new Date();
-    return this._datePipe.transform(date, 'MM/dd/y'); // using angular's built in date pipe to format date object.
-  }
+    today(): string {
+        let date = new Date();
+        return this._datePipe.transform(date, 'y/MM/dd'); // using angular's built in date pipe to format date object.
+    }
 
     ngDoCheck(): void {
         // Dynamically sets the multiselect values to the form.
@@ -170,6 +197,45 @@ export class SharedComponent implements OnInit, DoCheck, OnChanges {
     }
 
     /**
+     * Calculates the end dates of the tb_phases based on
+     * tb_category and tb_phase
+     */
+    tbEndCalculator(val) {
+        const tb_category = this.patientForm.get('tb_category').value;
+        const tb_phase = this.patientForm.get('tb_phase').value;
+        let tbRange: number;
+
+        if (tb_category == 1) {
+            if (tb_phase == 'intensive') {
+                tbRange = 90
+            }
+            else if (tb_phase == 'continuation') {
+                tbRange = 112
+            }
+        }
+        else if (tb_category == 2) {
+            if (tb_phase == 'intensive') {
+                tbRange = 90
+            }
+            else if (tb_phase == 'continuation') {
+                tbRange = 150
+            }
+        }
+        this.patientForm.patchValue({
+            end_tb_phase: this.dateCalc(val, tbRange)
+        })
+    }
+
+    /**
+     * Date Calculator
+     */
+    dateCalc(value, days_to_add) {
+        let new_date = new Date(value);
+        let start_date = new Date(new_date.getFullYear(), new_date.getMonth(), new_date.getDate()).getTime();
+        let expected_end_date = new Date((1000 * 60 * 60 * 24 * days_to_add) + start_date);
+        return this._datePipe.transform(expected_end_date, 'y/MM/dd');
+    }
+    /**
      * Methods prefixed with set... modify the property values of
      * the patient's patient.
      */
@@ -182,12 +248,12 @@ export class SharedComponent implements OnInit, DoCheck, OnChanges {
         }
         if (val == 'tb_start') {
             this.patientForm.patchValue({
-                tb_start: value
+                start_tb_phase: value
             })
         }
         if (val == 'tb_end') {
             this.patientForm.patchValue({
-                tb_end: value
+                end_tb_phase: value
             })
         }
         if (val == 'enrollment') {
@@ -230,8 +296,6 @@ export class SharedComponent implements OnInit, DoCheck, OnChanges {
     }
 
     setService(value) {
-        // console.log(value);
-        // console.log(this.patientServices.find(value));
         this._patientService.getService(+[value]).subscribe(regimen => this.regimen = regimen);
     }
 

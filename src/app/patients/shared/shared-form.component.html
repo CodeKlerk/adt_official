@@ -63,7 +63,7 @@
                                         <div class="form-group">
                                             <label><span style="color:red; font-weight:bold">*</span> Date of Birth:</label>
                                             <div class="input-group">
-                                                <input type="text" formControlName="birth_date" placeholder="Select a date" class="form-control datepicker" [saUiDatepicker]="{ dateFormat: 'mm/dd/yy' , changeMonth: true, changeYear: true, yearRange : 'c-65:c+0', maxDate: 'new Date()'}" (selectDate)='setDate($event,"birthday")'>
+                                                <input type="text" formControlName="birth_date" placeholder="Select a date" class="form-control datepicker" [saUiDatepicker]="{ dateFormat: 'yy/mm/dd' , changeMonth: true, changeYear: true, yearRange : 'c-65:c+0', maxDate: 'new Date()'}" (selectDate)='setDate($event,"birthday")'>
                                             </div>
                                         </div>
                                     </div>
@@ -178,22 +178,22 @@
                                                 <option value="discordant">Discordant</option>
                                             </select>
                                         </div>
-                                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div *ngIf="patientForm.get('patient_status').value != 'no partner'" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                             <label>Disclosure</label>
-                                        </div>
-                                        <div *ngIf="patientForm.get('patient_status').value == 'no partner'" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                            <div class="row">
-                                                <div class="col-sm-12 col-md-10">
-                                                    <label class="radio radio-inline no-margin">
-                                                        <input type="radio" value="1" class="radiobox style-2" formControlName="disclosure" />
-                                                        <span>Yes</span>
-                                                    </label>
-                                                    <label class="radio radio-inline">
-                                                        <input type="radio" value="0" class="radiobox style-2" formControlName="disclosure" />
-                                                        <span>No</span>
-                                                    </label>
+                                                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                    <div class="row">
+                                                        <div class="col-sm-12 col-md-10">
+                                                            <label class="radio radio-inline no-margin">
+                                                                <input type="radio" value="1" class="radiobox style-2" formControlName="disclosure" />
+                                                                <span>Yes</span>
+                                                            </label>
+                                                            <label class="radio radio-inline">
+                                                                <input type="radio" value="0" class="radiobox style-2" formControlName="disclosure" />
+                                                                <span>No</span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
                                         </div>
                                         <div *ngIf="patientForm.get('patient_status').value == 'concordant'" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                             <label>Match to spouse in this ccc?</label>
@@ -295,7 +295,7 @@
                                                 <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                                     <label>End of phase:</label>
                                                     <div class="input-group">
-                                                        <input type="text" placeholder="End phase" class="form-control datepicker" [saUiDatepicker]="{ dateFormat: 'dd/mm/yy' }" (selectDate)='setDate($event,"tb_end")' formControlName="tb_end">
+                                                        <input type="text" placeholder="End phase" class="form-control datepicker" [saUiDatepicker]="{ dateFormat: 'yy/mm/dd' }" (selectDate)='setDate($event,"tb_end")' formControlName="end_tb_phase">
                                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                                     </div>
                                                 </div>
@@ -305,7 +305,7 @@
                                                     <div class="form-group">
                                                         <label>Start of phase:</label>
                                                         <div class="input-group">
-                                                            <input type="text" formControlName="tb_start" placeholder="Start phase" class="form-control datepicker" [saUiDatepicker]="{ dateFormat: 'dd/mm/yy', maxDate: 'new Date()' }" (selectDate)='setDate($event,"tb_start")'>
+                                                            <input type="text" formControlName="start_tb_phase" placeholder="Start phase" class="form-control datepicker" [saUiDatepicker]="{ dateFormat: 'yy/mm/dd', maxDate: 'new Date()' }" (selectDate)='setDate($event,"tb_start")'>
                                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                                         </div>
                                                     </div>
@@ -313,7 +313,7 @@
                                                 <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                                     <label>End of phase:</label>
                                                     <div class="input-group">
-                                                        <input type="text" formControlName="tb_end" placeholder="End phase" class="form-control datepicker" [saUiDatepicker]="{ dateFormat: 'dd/mm/yy' }" (selectDate)='setDate($event,"tb_end")'>
+                                                        <input type="text" formControlName="end_tb_phase" placeholder="End phase" class="form-control datepicker" [saUiDatepicker]="{ dateFormat: 'yy/mm/dd' }" (selectDate)='setDate($event,"tb_end")'>
                                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                                     </div>
                                                 </div>
@@ -328,7 +328,7 @@
                                     <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                         <label><span style="color:red; font-weight:bold">*</span> Enrollment date:</label>
                                         <div class="input-group">
-                                            <input  type="text" formControlName="enrollment_date" placeholder="Select a date" class="form-control datepicker" [saUiDatepicker]="{ dateFormat: 'dd/mm/yy', maxDate: 'new Date()', defaultDate: +5 }" (selectDate)='setDate($event,"enrollment")'>
+                                            <input  type="text" formControlName="enrollment_date" placeholder="Select a date" class="form-control datepicker" [saUiDatepicker]="{ dateFormat: 'yy/mm/dd', maxDate: 'new Date()', defaultDate: +5 }" (selectDate)='setDate($event,"enrollment")'>
                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                         </div>
                                     </div>
@@ -343,7 +343,7 @@
                                     <div *ngIf="edit" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                         <label>Date of status change:</label>
                                         <div class="input-group">
-                                            <input type="text" formControlName="status_change" placeholder="End date" class="form-control datepicker" [saUiDatepicker]="{ dateFormat: 'dd/mm/yy' }" (selectDate)='setDate($event, "status_change")'>
+                                            <input type="text" formControlName="status_change" placeholder="End date" class="form-control datepicker" [saUiDatepicker]="{ dateFormat: 'yy/mm/dd' }" (selectDate)='setDate($event, "status_change")'>
                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                         </div>
                                     </div>
@@ -377,7 +377,7 @@
                                     </div>
                                     <div *ngIf="patientForm.get('service_id').value != 4" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                         <label>Start Regimen Date</label>
-                                        <input id="reg_date" type="text" formControlName="regimen_start_date" placeholder="Regimen start date" class="form-control datepicker" [saUiDatepicker]="{ dateFormat: 'dd/mm/yy', maxDate: 'new Date()' }" (selectDate)='setDate($event,"regimen")'>
+                                        <input id="reg_date" type="text" formControlName="regimen_start_date" placeholder="Regimen start date" class="form-control datepicker" [saUiDatepicker]="{ dateFormat: 'yy/mm/dd', maxDate: 'new Date()' }" (selectDate)='setDate($event,"regimen")'>
                                     </div>
                                     <div *ngIf="regimen && regimen.name != 'PEP'" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                         <label>WHO Stage</label>
@@ -394,7 +394,7 @@
                                             <div class="form-group">
                                                 <label>Isoniazid start date:</label>
                                                 <div class="input-group">
-                                                    <input type="text" formControlName="isoniazid_start" placeholder="Start date" class="form-control datepicker" [saUiDatepicker]="{ dateFormat: 'dd/mm/yy', maxDate: 'new Date()' }" (selectDate)='setDate($event,"isoniazid_start")'>
+                                                    <input type="text" formControlName="isoniazid_start" placeholder="Start date" class="form-control datepicker" [saUiDatepicker]="{ dateFormat: 'yy/mm/dd', maxDate: 'new Date()' }" (selectDate)='setDate($event,"isoniazid_start")'>
                                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                                 </div>
                                             </div>
@@ -402,7 +402,7 @@
                                         <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                             <label>Isoniazid end date:</label>
                                             <div class="input-group">
-                                                <input type="text" formControlName="isoniazid_end" placeholder="End date" class="form-control datepicker" [saUiDatepicker]="{ dateFormat: 'dd/mm/yy' }" (selectDate)='setDate($event, "isoniazid_end")'>
+                                                <input type="text" formControlName="isoniazid_end" placeholder="End date" class="form-control datepicker" [saUiDatepicker]="{ dateFormat: 'yy/mm/dd' }" (selectDate)='setDate($event, "isoniazid_end")'>
                                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                             </div>
                                         </div>
