@@ -1,4 +1,4 @@
-<div id="content">
+<div id="content" *ngIf="supporter">
    <div class="row">
       <article class="col-sm-12">
          <sa-widget [editbutton]="false" color="darken">
@@ -19,7 +19,7 @@
                               <span class="input-group-addon">
                               <i class="glyphicon glyphicon-search"></i>
                               </span>
-                              <input type="search" class="form-control" placeholder="Search" aria-controls="datatable_fixed_column">
+                              <input type="search" class="form-control" [(ngModel)]="binding" placeholder="Search" aria-controls="datatable_fixed_column">
                               </label>
                            </div>
                         </div>
@@ -31,15 +31,15 @@
                               <th style="width: 15%; text-align: center">Options</th>
                            </tr>
                         </thead>
-                        <tbody>
-                           <tr *ngFor="let supporter of supportersList">
+                        <tbody> 
+                           <tr *ngFor="let supporter of supportersList | facilitySupporters: 'name':binding">
                               <td>{{supporter.name}}</td>
                               <td style="text-align: center">
                                  <a class="btn btn-primary btn-xs" data-toggle="modal" attr.data-target="#edit{{supporter.id}}">Edit</a>
                                  <a class="btn btn-danger btn-xs" data-toggle="modal" attr.data-target="#disable{{supporter.id}}">Disable</a>
                               </td>
                               <!--Edit Modal-->
-                              <div id="edit{{supporter.id}}" class="modal fade" role="dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                              <div  class="modal fade" id="edit{{supporter.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                  <div class="modal-dialog">
                                     <div class="modal-content">
                                        <div class="modal-header">

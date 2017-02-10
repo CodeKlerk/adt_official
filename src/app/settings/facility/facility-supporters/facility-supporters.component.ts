@@ -23,7 +23,7 @@ export class FacilitySupportersComponent implements OnInit {
   constructor(private _facilityService: FacilityService) { }
 
   supportersForm: NgForm;
-  @ViewChild('supportersForm')
+  
   editForm: NgForm;
   @ViewChild('editForm') currentForm: NgForm;
 
