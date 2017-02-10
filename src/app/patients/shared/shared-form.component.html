@@ -120,16 +120,27 @@
                                         <input class="form-control" placeholder="Height" type="text" formControlName="current_height" >
                                     </div>
                                     <div *ngIf="edit" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <label>Current Body Surface Area (MSQ)</label>
-                                        <input class="form-control" placeholder="<<auto generate>>"  type="text"  formControlName="bsa" />
+                                        <label>Current Body Surface Area (MSQ)</label> 
+                                        <input class="form-control" placeholder="<<auto generate>>"  type="text"  formControlName="bsa" readonly/>
                                     </div>
                                     <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                         <label>Body Surface Area (MSQ)</label>
-                                        <input class="form-control" placeholder="<<auto generate>>"  type="text"  formControlName="bsa" />
+                                        <input class="form-control" placeholder="<<auto generate>>"  type="text"  formControlName="bsa" readonly/>
                                     </div>
-                                    <div class="form-group col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                                    <div class="form-group col-xs-12 col-sm-5 col-md-5 col-lg-5" [ngClass]="{'has-error': (patientForm.get('phone_number').touched || patientForm.get('phone_number').dirty) && !patientForm.get('phone_number').valid }">
                                         <label>Phone Contact</label>
                                         <input class="form-control" placeholder="e.g 0712345678" type="text" formControlName="phone_number">
+                                        <span *ngIf="patientForm.get('phone_number').errors?.required">
+                                            Phone number is required
+                                        </span>
+                                        <span *ngIf="patientForm.get('phone_number').errors?.maxlength">
+                                            <!--{{ patientForm.get('phone_number').errors | json }}-->
+                                            Insert a maximum of 10 characters
+                                        </span>
+                                        <span *ngIf="patientForm.get('phone_number').errors">
+                                            {{ patientForm.get('phone_number').errors | json }}
+                                            <!--Insert a maximum of 10 characters-->
+                                        </span>
                                     </div>
                                     <div class=" form-group col-xs-12 col-sm-7 col-md-7 col-lg-7">
                                         <div class="row">

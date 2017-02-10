@@ -95,60 +95,60 @@ export class SharedComponent implements OnInit, DoCheck, OnChanges {
         // Form Builder Logic
         const form = this.patientForm;
         this.patientForm = this.fb.group({
-            id: ['', Validators.required],
+            id: [''],
             ccc_number: ['', Validators.required],
             first_name: ['', Validators.required],
-            last_name: ['', Validators.required],
-            other_name: ['', Validators.required],
+            last_name: [''],
+            other_name: [''],
             birth_date: ['', Validators.required],
-            place_of_birth: ['', Validators.required],
-            age_in_years: ['', Validators.required],
-            age_in_months: ['', Validators.required],
+            place_of_birth: [''],
+            age_in_years: [''],
+            age_in_months: [''],
             current_weight: ['', Validators.required],
             current_height: ['', Validators.required],
-            bsa: ['', Validators.required],
-            phone_number: ['', Validators.required, Validators.maxLength(10)],
-            physical_address: ['', Validators.required],
+            bsa: [''],
+            phone_number: ['', [Validators.required, Validators.maxLength(10)]],
+            physical_address: [''],
             gender: ['', Validators.required],
-            is_pregnant: ['', Validators.required],
+            is_pregnant: [''],
             is_tb: [''],
             is_tb_tested: [''],
-            is_sms: ['0', Validators.required],
-            is_smoke: ['', Validators.required],
-            is_alcohol: ['', Validators.required],
-            current_status: ['', Validators.required],
+            is_sms: ['0'],
+            is_smoke: [''],
+            is_alcohol: [''],
+            current_status: [''],
             enrollment_date: [this.today(), Validators.required],
             regimen_start_date: [this.today(), Validators.required],
             regimen_id: ['', Validators.required],
             service_id: ['', Validators.required],
-            facility_id: ['', Validators.required],
-            supporter_id: ['', Validators.required],
-            who_stage_id: ['', Validators.required],
-            prophylaxis: ['', Validators.required],
-            source_id: ['', Validators.required],
-            status: ['', Validators.required],
-            disclosure: ['', Validators.required],
-            spouse_ccc: ['', Validators.required],
+            facility_id: ['1'],
+            supporter_id: ['1'],
+            who_stage_id: [''],
+            prophylaxis: [''],
+            source_id: [''],
+            status: [''],
+            disclosure: [''],
+            spouse_ccc: [''],
             patient_status: '',
-            family_planning: ['', Validators.required],
-            support_group: [{ value: '', disabled: true }, Validators.required],
-            alternate_contact: ['', Validators.required],
-            other_drugs: [{ value: '', disabled: true }, Validators.required],
-            other_illness: [{ value: '', disabled: true }, Validators.required],
-            other_allergies: [{ value: '', disabled: true }, Validators.required],
-            illnesses: ['', Validators.required],
-            drug_allergies: ['', Validators.required],
-            tb_category: ['', Validators.required],
-            tb_phase: ['', Validators.required],
-            start_tb_phase: ['', Validators.required],
-            end_tb_phase: ['', Validators.required],
-            pep_reason: ['', Validators.required],
-            isoniazid_start: ['', Validators.required],
-            isoniazid_end: ['', Validators.required],
+            family_planning: [''],
+            support_group: [{ value: '', disabled: true }],
+            alternate_contact: [''],
+            other_drugs: [{ value: '', disabled: true }],
+            other_illness: [{ value: '', disabled: true }],
+            other_allergies: [{ value: '', disabled: true }],
+            illnesses: [''],
+            drug_allergies: [''],
+            tb_category: [''],
+            tb_phase: [''],
+            start_tb_phase: [''],
+            end_tb_phase: [''],
+            pep_reason: [''],
+            isoniazid_start: [''],
+            isoniazid_end: [''],
             is_support: '',
             is_illness: '',
             is_drugs: '',
-            is_allergies: ''
+            is_allergies: '',
         });
         this.patientForm.get('patient_status').valueChanges.subscribe(
             value => {
@@ -177,7 +177,7 @@ export class SharedComponent implements OnInit, DoCheck, OnChanges {
                     isoniazid_end: this.dateCalc(value, 168)
                 })
             }
-        )
+        );
     }
 
     today(): string {
@@ -188,12 +188,16 @@ export class SharedComponent implements OnInit, DoCheck, OnChanges {
     ngDoCheck(): void {
         // Dynamically sets the multiselect values to the form.
         console.log(this.chronic_illness_list)
+        let height = this.patientForm.get('current_height').value;
+        let weight = this.patientForm.get('current_weight').value;
         this.patientForm.patchValue({
             family_planning: this.family_planning_list,
             illnesses: this.chronic_illness_list,
             drug_allergies: this.allergies_list,
-            prophylaxis: this.prophylaxis_list
-        })
+            prophylaxis: this.prophylaxis_list,
+            bsa: Math.sqrt((height * weight) / 3600)
+        });
+        
     }
 
     /**
@@ -304,13 +308,13 @@ export class SharedComponent implements OnInit, DoCheck, OnChanges {
      */
     onSubmit(): void {
         if (this.formType == 'addPatient') {
-            this._patientService.addPatient(this.patient).subscribe(
+            this._patientService.addPatient(this.patientForm.value).subscribe(
                 () => this.onSaveComplete(),
                 (error) => { console.log("Error happened" + error) }
             );
         }
         else {
-            this._patientService.updatePatient(this.patient).subscribe(
+            this._patientService.updatePatient(this.patientForm.value).subscribe(
                 (response) => this.onUpdateComplete(response),
                 (error) => { console.log("Error happened" + error) },
                 () => { console.log("the subscription is completed") }
