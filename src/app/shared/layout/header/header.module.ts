@@ -7,6 +7,7 @@ import {CommonModule} from "@angular/common";
 import {RecentProjectsComponent} from "./recent-projects/recent-projects.component";
 import {FullScreenComponent} from "./full-screen/full-screen.component";
 import {CollapseMenuComponent} from "./collapse-menu/collapse-menu.component";
+import { NotificationsComponent } from './notifications/notifications.component';
 
 import {ActivitiesComponent} from "./activities/activities.component";
 import {ActivitiesMessageComponent} from "./activities/activities-message/activities-message.component";
@@ -43,6 +44,7 @@ import {PopoverModule} from "ng2-popover/src/index";
     ActivitiesComponent,
     HeaderComponent,
     SpeechButtonComponent,
+    NotificationsComponent,
   ],
   exports: [
     HeaderComponent

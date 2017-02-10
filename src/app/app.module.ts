@@ -11,10 +11,12 @@ import { UserService } from "./shared/user/user.service";
 import { HttpModule, JsonpModule } from '@angular/http';
 
 import { FormsModule } from '@angular/forms';
+import { FaqComponent } from "./faq/faq.component";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FaqComponent
   ],
   imports: [
 
