@@ -7,6 +7,7 @@ import { DispenseService } from './dispense.service';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { DrugsTable } from './dispense';
 import 'rxjs/add/operator/switchMap';
+
 declare var $: any;
 
 @Component({

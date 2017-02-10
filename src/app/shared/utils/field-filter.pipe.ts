@@ -11,4 +11,3 @@ export class FieldFilterPipe implements PipeTransform {
     return items.filter(it => it[field].toLowerCase().indexOf(value.toLowerCase()) > -1);
   }
 }
-

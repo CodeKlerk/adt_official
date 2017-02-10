@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { SmartadminModule } from "../../shared/smartadmin.module";
 import { SmartadminInputModule } from "../../shared/forms/input/smartadmin-input.module";
@@ -12,7 +12,7 @@ import { SharedComponent }   from './shared.component';
 @NgModule({
     imports: [
         CommonModule,
-        FormsModule,
+        ReactiveFormsModule,
         SmartadminInputModule,
         SmartadminDatatableModule,
         SmartadminModule,
@@ -20,7 +20,6 @@ import { SharedComponent }   from './shared.component';
     ],
     exports: [
         CommonModule,
-        FormsModule,
         SmartadminInputModule,
         SmartadminDatatableModule,
         SmartadminModule,
