@@ -67,7 +67,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let patient of patients.data | fieldFilter:'first_name':patient_name | fieldFilter:'phone_number':contact | fieldFilter:'ccc_number':ccc_no | fieldFilter:'status':status_binding ">
+                                    <tr *ngFor="let patient of patients.data | fieldFilter:'first_name':patient_name | fieldFilter:'phone_number':contact | fieldFilter:'ccc_number':ccc_no | fieldFilter:'status':status_binding | fieldFilter:'service_id':regimen ">
                                         <td>{{patient.ccc_number }}</td>
                                         <td>{{patient.first_name}}</td>
                                         <td>{{patient.birth_date}}</td>
