@@ -2,22 +2,11 @@
 <div id="content" *ngIf="patients">
     <sa-widgets-grid>
         <article class="col-sm-12">
-
-            <sa-widget [editbutton]="false" [colorbutton]="false" [editbutton]="false" [togglebutton]="false" [deletebutton]="false" [custombutton]="false" color="blueDark">
+            <sa-widget [editbutton]="false" [colorbutton]="false" [editbutton]="false" [togglebutton]="false" [deletebutton]="false"
+                [custombutton]="false" color="blueDark">
                 <header><span class="widget-icon"> <i class="fa fa-table"></i> </span>
                     <h2>Patients</h2>
                     <div class="widget-toolbar">
-                        <div class="form-inline">
-                            <label for="status_binding">
-                            Filter Patients Based on Status:
-                        </label>
-                        <select name="status_binding" class="form-control" [(ngModel)]="status_binding">
-                            <option value="active">Active</option>
-                            <option value="inactive">Inactive</option>
-                            <option value="no partner">No partner</option>
-                            <option value="">All</option>
-                        </select>  
-                        </div>
                     </div>
                 </header>
                 <div>
@@ -32,6 +21,19 @@
                                             </span>
                                             <input type="search" class="form-control" [(ngModel)]="binding" placeholder="Search" aria-controls="datatable_fixed_column">
                                         </label>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 hidden-xs">
+                                    <div class="pull-right form-inline">
+                                        <label for="status_binding">
+                                            Filter Patients Based on Status:
+                                        </label>
+                                        <select name="status_binding" class="form-control" [(ngModel)]="status_binding">
+                                            <option value="active">Active</option>
+                                            <option value="inactive">Inactive</option>
+                                            <option value="no partner">No partner</option>
+                                            <option value="">All</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -114,14 +116,15 @@
                                 </div>
                                 <div class="col-xs-12 col-sm-6">
                                     <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_1_paginate">
-                                        <pagination class="dataTables_paginate paging_simple_numbers" [itemsPerPage]="patients.per_page" [totalItems]="patients.total" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
+                                        <pagination class="dataTables_paginate paging_simple_numbers" [itemsPerPage]="patients.per_page" [totalItems]="patients.total"
+                                            [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </sa-widget>
+                </sa-widget>
         </article>
     </sa-widgets-grid>
 </div>
